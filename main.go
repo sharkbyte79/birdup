@@ -43,7 +43,7 @@ func main() {
 	}
 	userService, err := service.NewUserService(userRepo)
 
-	// TODO move this to route package, protect route for only authorized usage
+	// TODO move this to route package(?), protect route for only authorized usage
 	r.POST("/user/create", handler.CreateUserHandler(userService))
 
 	r.GET("/observations/:region", recentObsHandler(s))

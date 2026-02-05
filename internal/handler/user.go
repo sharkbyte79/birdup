@@ -21,25 +21,37 @@ func CreateUserHandler(s *svc.UserService) gin.HandlerFunc {
 		// Attempt to bind JSON fields to user creation dto
 		if err := ctx.BindJSON(&newUser); err != nil {
 			ctx.JSON(http.StatusBadRequest, gin.H{
-				"error": err.Error(),
+				"error": "failed to decode request body",
 			})
+			return
 		}
 
 		u := &model.User{FirebaseId: newUser.FirebaseID, Email: newUser.Email, CreatedAt: time.Now()}
 		if err := s.Create(u); err != nil {
-			ctx.JSON(http.StatusBadRequest, gin.H{
+			ctx.JSON(http.StatusInternalServerError, gin.H{
 				"error": err.Error(),
 			})
+			return
 		}
-
-		// ctx.JSON(http.StatusCreated, gin.H{
-		// 	"message": "new user was created",
-		// })
+		// NOTE returning indented json is more resource intensive
 		ctx.IndentedJSON(http.StatusCreated, u)
 	}
 }
 
-// func GetUserHandler(s *svc.UserService) gin.HandlerFunc {}
+// func GetUserHandler(s *svc.UserService) gin.HandlerFunc {
+// 	return func(ctx *gin.Context) {
+// 		var userReq dto.GetUserRequest
+
+// 		if err := ctx.BindJSON(&userReq); err != nil {
+// 			ctx.JSON(http.StatusBadRequest, gin.H{
+// 				"error": err.Error(),
+// 			})
+// 		}
+
+// 		// user, err :=
+// 		ctx.JSON(http.StatusOK)
+// 	}
+// }
 
 // func DeleteUserHandler(s *svc.UserService) gin.HandlerFunc {}
 

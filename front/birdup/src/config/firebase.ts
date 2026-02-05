@@ -9,7 +9,7 @@ interface FirebaseConfig {
 }
 
 export const config: FirebaseConfig = {
-    // NOTE api key is only used for identifying the Firebase project
+    // NOTE this API key is only used for identifying the Firebase project
     // and may be safely exposed (https://firebase.google.com/docs/projects/api-keys)
     apiKey: "AIzaSyCZ81hSYOXCTtwv0_mbJ1-xUp042usl19Y",
     authDomain: "birdup-ec859.firebaseapp.com",

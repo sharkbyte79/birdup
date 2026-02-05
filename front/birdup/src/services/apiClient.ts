@@ -1,13 +1,13 @@
-import { birdObservation } from "../../types/shared.types.ts";
+import { birdObservation } from "../types/shared.types.ts";
 
-const BASE_URL: string = "http://localhost:8080";
+const BASE_URL: string = "http://localhost:5050";
 
-export interface birdupRequest {
+export interface BirdupRequest {
     method?: "GET" | "POST";
     body?: any;
 }
 
-export interface birdupResponse<T> {
+export interface BirdupResponse<T> {
     status: number;
     data: T;
 }
@@ -15,7 +15,7 @@ export interface birdupResponse<T> {
 export default async function birdupFetch<T = any>(endpoint: string, {
     method,
     body
-}: birdupRequest): Promise<birdupResponse<T>> {
+}: BirdupRequest): Promise<BirdupResponse<T>> {
     // Join requested endpoint with base url
     const url: string = BASE_URL + endpoint;
     const res: Response = await fetch(url, {
@@ -34,11 +34,14 @@ export default async function birdupFetch<T = any>(endpoint: string, {
     }
 }
 
-export async function getObservations(regionCode: string, notable: boolean): Promise<birdupResponse<birdObservation[]>> {
+export async function getObservations(
+    regionCode: string, 
+    notable: boolean
+): Promise<BirdupResponse<birdObservation[]>> {
     const endpoint: string = `/observations/${regionCode}${notable ? "/notable" : ""}`;
 
     return await birdupFetch(endpoint, {
         method: "GET",
     });
 }
-    
+
