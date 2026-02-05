@@ -1,9 +1,10 @@
-# BirdUp
+# 🐦 BirdUp
 A full-stack web application for exploring bird observation data via the public [eBird API](https://ebird.org/home). Enables search for observations by **region code** (e.g. US-CT, US-NY). 
 
 ## Tech Stack
 - **Backend:** Go ([Gin](https://github.com/gin-gonic/gin) framework)
 - **Frontend:** TypeScript, React and Tailwind CSS
+- **Data Layer:** PostgreSQL (Containerized)
 - **External Services**: Firebase (Authentication).
 
 ## Schema
@@ -13,7 +14,6 @@ A full-stack web application for exploring bird observation data via the public 
     - `createdAt`: The timestamp for the moment of this user's creation.
 
 - `BirdFollow`: Models the relation between a single User and a bird species they've followed observations of.
-    - `id` (pk): The unique identifier for this record.
-    - `userId` (fk): The identifying Firebase ID assigned to the relevant User.
-    - `speciesCode`: The unique identifier for the relevant bird species as assigned by eBird. 
+    - `userId` (fk, pk): The identifying Firebase ID assigned to the relevant User.
+    - `speciesCode` (pk): The unique identifier for the relevant bird species as assigned by eBird. 
     - `createdAt`: The timestamp for the moment this record was created.
