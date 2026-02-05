@@ -3,6 +3,7 @@
 CREATE TABLE follows (
     firebase_id VARCHAR(255) NOT NULL,
     species_code VARCHAR(255) NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL,
     CONSTRAINT fk_firebaseid FOREIGN KEY (firebase_id) REFERENCES users(firebaseid),
     PRIMARY KEY (firebase_id, species_code)
 );
