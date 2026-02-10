@@ -1,6 +1,7 @@
  services:
   db:
     image: postgres:18
+    container_name: postgres_db
     restart: always
     environment:
       POSTGRES_PASSWORD: postgres
@@ -10,6 +11,12 @@
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/
-
+  redis:
+    image: redis:6.2-alpine
+    restart: unless-stopped
+    container_name: redis
+    ports:
+      - "6379:6379"
+    command: redis-server --save 60 1 --loglevel warning
  volumes:
   postgres_data:
