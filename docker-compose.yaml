@@ -1,4 +1,15 @@
  services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile 
+    ports: 
+      - 5050:5050
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - ./:/app
   db:
     image: postgres:18
     container_name: postgres_db
@@ -16,7 +27,7 @@
     restart: unless-stopped
     container_name: redis
     ports:
-      - "6379:6379"
+      - "6378:6379"
     command: redis-server --save 60 1 --loglevel warning
  volumes:
   postgres_data:
