@@ -4,7 +4,7 @@ A full-stack web application for exploring bird observation data via the public 
 ## Tech Stack
 - **Backend:** Go ([Gin](https://github.com/gin-gonic/gin) framework)
 - **Frontend:** TypeScript, React and Tailwind CSS
-- **Data Layer:** PostgreSQL (Containerized)
+- **Data Layer:** PostgreSQL, Redis (Containerized), 
 - **External Services**: Firebase (Authentication).
 
 ## Schema
