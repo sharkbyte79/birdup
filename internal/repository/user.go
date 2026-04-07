@@ -15,19 +15,19 @@ type UserRepository interface {
 	// GetOne(firebaseId string) (*models.User, error)
 }
 
-type Repository struct {
+type UserRepo struct {
 	Store *db.Store // Underlying database connection used by this repository
 }
 
-func NewRepository(store *db.Store) (UserRepository, error) {
+func NewUserRepository(store *db.Store) (UserRepository, error) {
 	if store == nil {
 		return nil, errors.New("failed to create new UserRepository")
 	}
-	return &Repository{Store: store}, nil
+	return &UserRepo{Store: store}, nil
 }
 
 // Create inserts a new User record matching the given argument.
-func (r *Repository) Create(u *models.User) error {
+func (r *UserRepo) Create(u *models.User) error {
 	_, err := r.Store.Db.Exec(
 		"INSERT INTO users (firebaseId, email, createdAt) VALUES ($1, $2, $3);",
 		u.FirebaseId,

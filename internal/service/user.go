@@ -5,14 +5,14 @@ import (
 	"fmt"
 
 	"github.com/sharkbyte79/birdup/internal/model"
-	"github.com/sharkbyte79/birdup/internal/repository"
+	repo "github.com/sharkbyte79/birdup/internal/repository"
 )
 
 type UserService struct {
-	repo repository.UserRepository
+	repo repo.UserRepository
 }
 
-func NewUserService(r repository.UserRepository) (*UserService, error) {
+func NewUserService(r repo.UserRepository) (*UserService, error) {
 	if r == nil {
 		return nil, errors.New("failed to create User service")
 	}

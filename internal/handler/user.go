@@ -5,18 +5,16 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/sharkbyte79/birdup/internal/dto"
 	"github.com/sharkbyte79/birdup/internal/model"
-
-	// models "github.com/sharkbyte79/birdup/internal/model"
 	svc "github.com/sharkbyte79/birdup/internal/service"
+	// models "github.com/sharkbyte79/birdup/internal/model"
 )
 
 // CreateUserHandler returns a HandlerFunc that handles a POST request to
 // create a new User record.
 func CreateUserHandler(s *svc.UserService) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		var newUser dto.CreateUserRequest
+		var newUser model.CreateUserRequest
 
 		// Attempt to bind JSON fields to user creation dto
 		if err := ctx.BindJSON(&newUser); err != nil {
@@ -26,7 +24,11 @@ func CreateUserHandler(s *svc.UserService) gin.HandlerFunc {
 			return
 		}
 
-		u := &model.User{FirebaseId: newUser.FirebaseID, Email: newUser.Email, CreatedAt: time.Now()}
+		u := &model.User{
+			FirebaseId: newUser.FirebaseID,
+			Email:      newUser.Email,
+			CreatedAt:  time.Now(),
+		}
 		if err := s.Create(u); err != nil {
 			ctx.JSON(http.StatusInternalServerError, gin.H{
 				"error": err.Error(),
