@@ -12,8 +12,12 @@ import (
 	ac "github.com/sharkbyte79/birdup/internal/client"
 )
 
-// Time in minutes to retain cached eBird API responses.
-const cacheExpiration = 30 * time.Minute
+const (
+	cacheExpiration   = 30 * time.Minute              // Time in minutes to retain cached eBird API responses.
+	regionCodePattern = "^[A-Za-z]{2}(-[0-9][0-9])?$" // Regexp pattern for a valid region code
+)
+
+var regionCodeRegex = regexp.MustCompile(regionCodePattern)
 
 type BirdService interface {
 	RecentObsByRegion(rc string, back, max int) ([]ac.BirdObservation, error)
@@ -36,13 +40,7 @@ type CachedEBirdService struct {
 // validRegionCode returns true if rc matches the format of a value
 // region code as accepted by the eBird API, and false otherwise.
 func validRegionCode(rc string) bool {
-	pattern := "^[A-Za-z]{2}(-[0-9][0-9])?"
-	ok, err := regexp.Match(pattern, []byte(rc))
-	if err != nil {
-		// assume false or some malformity for error
-		return false
-	}
-	return ok
+	return regionCodeRegex.Match([]byte(rc))
 }
 
 // NewEBirdService returns a pointer to an EBirdService.
@@ -54,7 +52,7 @@ func NewEBirdService(tok string, hc *http.Client) (*EBirdService, error) {
 	return &EBirdService{client: ebc}, nil
 }
 
-// NotableObsByRegion returns a slice of BirdObservations and an error.
+// RecentObsByRegion returns a slice of BirdObservations and an error.
 func (s *EBirdService) RecentObsByRegion(rc string, back, max int) ([]ac.BirdObservation, error) {
 	// Reject region code that doesn't match expected format
 	if !validRegionCode(rc) {
