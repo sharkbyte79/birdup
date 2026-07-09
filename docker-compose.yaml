@@ -1,8 +1,8 @@
 name: birdup_dev
 services:
   db:
-    container_name: postgres-spring-boot
     image: postgres:latest
+    container_name: db
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
@@ -14,6 +14,15 @@ services:
     networks:
       - db
     restart: unless-stopped
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.7.0
+    container_name: keycloak
+    environment:
+      - KC_BOOTSTRAP_ADMIN_USERNAME=admin
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
+    command: start-dev
+    ports:
+      - "5050:8080"
 
 networks:
   db:
