@@ -1,0 +1,9 @@
+
+
+<h2 tuiTitle>Results: {{ regionCode() }}</h2>
+<section class="sighting-results-grid">
+@for (sighting of results(); track sighting) {
+  <app-sighting-card [sighting]="sighting" />
+}
+
+</section>
