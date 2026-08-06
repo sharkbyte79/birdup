@@ -1,16 +1,18 @@
 package org.birdup.api.controller;
 
-import org.birdup.api.model.BirdSighting;
+import org.birdup.api.entity.BirdSighting;
 import org.birdup.api.service.SightingService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @RestController
-@RequestMapping("api/v1/sighting")
+@RequestMapping("api/v1/sightings")
 public class SightingController {
 
     private final SightingService sightingService;
@@ -20,12 +22,14 @@ public class SightingController {
     }
 
     @GetMapping("/{regionCode}")
-    public List<BirdSighting> getSightingsByRegion(@PathVariable String regionCode) {
-        return sightingService.getSightingsByRegion(regionCode, false);
+    public ResponseEntity<List<BirdSighting>> getSightingsByRegion(@PathVariable String regionCode) {
+        var birdSightings = sightingService.getSightingsByRegion(regionCode, false);
+        return ResponseEntity.ok(birdSightings);
     }
 
     @GetMapping("/{regionCode}/notable")
-    public List<BirdSighting> getNotableSightingsByRegion(@PathVariable String regionCode) {
-        return sightingService.getSightingsByRegion(regionCode, true);
+    public ResponseEntity<List<BirdSighting>> getNotableSightingsByRegion(@PathVariable String regionCode) {
+        var birdSightings = sightingService.getSightingsByRegion(regionCode, true);
+        return ResponseEntity.ok(birdSightings);
     }
 }

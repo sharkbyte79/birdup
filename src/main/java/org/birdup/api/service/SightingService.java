@@ -1,6 +1,6 @@
 package org.birdup.api.service;
 
-import org.birdup.api.model.BirdSighting;
+import org.birdup.api.entity.BirdSighting;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
