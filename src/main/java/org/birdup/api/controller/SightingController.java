@@ -1,35 +1,59 @@
 package org.birdup.api.controller;
 
-import org.birdup.api.entity.BirdSighting;
-import org.birdup.api.service.SightingService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Map;
+import org.birdup.api.model.entity.BirdSighting;
+import org.birdup.api.service.SightingService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/sightings")
 public class SightingController {
 
-    private final SightingService sightingService;
+  private static final Logger logger = LoggerFactory.getLogger(SightingController.class);
+  private final SightingService sightingService;
 
-    public SightingController(SightingService sightingService) {
-        this.sightingService = sightingService;
-    }
+  public SightingController(SightingService sightingService) {
+    this.sightingService = sightingService;
+  }
 
-    @GetMapping("/{regionCode}")
-    public ResponseEntity<List<BirdSighting>> getSightingsByRegion(@PathVariable String regionCode) {
-        var birdSightings = sightingService.getSightingsByRegion(regionCode, false);
-        return ResponseEntity.ok(birdSightings);
-    }
+  @GetMapping("/{regionCode}")
+  public ResponseEntity<List<BirdSighting>> getSightingsByRegion(@PathVariable String regionCode) {
+    return ResponseEntity.ok(sightingService.getSightingsByRegion(regionCode, false));
+  }
 
-    @GetMapping("/{regionCode}/notable")
-    public ResponseEntity<List<BirdSighting>> getNotableSightingsByRegion(@PathVariable String regionCode) {
-        var birdSightings = sightingService.getSightingsByRegion(regionCode, true);
-        return ResponseEntity.ok(birdSightings);
-    }
+  @GetMapping("/{regionCode}/notable")
+  public ResponseEntity<List<BirdSighting>> getNotableSightingsByRegion(
+      @PathVariable String regionCode) {
+    return ResponseEntity.ok(sightingService.getSightingsByRegion(regionCode, true));
+  }
+
+  @GetMapping
+  public ResponseEntity<List<BirdSighting>> getSightingsByCoordinates(
+      @RequestParam(name = "lat") double latitude, @RequestParam(name = "lng") double longitude) {
+    return ResponseEntity.ok(
+        this.sightingService.getSightingsByCoordinates(latitude, longitude, false));
+  }
+
+  @GetMapping("/notable")
+  public ResponseEntity<List<BirdSighting>> getNotableSightingsByCoordinates(
+      @RequestParam(name = "lat") double latitude, @RequestParam(name = "lng") double longitude) {
+    return ResponseEntity.ok(
+        this.sightingService.getSightingsByCoordinates(latitude, longitude, true));
+  }
+
+  @GetMapping("/following/{userId}")
+  public ResponseEntity<Map<String, List<BirdSighting>>> getFollowedRegionSightings(
+      @PathVariable String userId) {
+    return ResponseEntity.ok(sightingService.getFollowedSightingsForUser(userId, false));
+  }
+
+  @GetMapping("/following/{userId}/notable")
+  public ResponseEntity<Map<String, List<BirdSighting>>> getFollowedRegionNotableSightings(
+      @PathVariable String userId) {
+    return ResponseEntity.ok(sightingService.getFollowedSightingsForUser(userId, true));
+  }
 }
