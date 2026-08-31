@@ -3,6 +3,7 @@ package org.birdup.api.configuration;
 import org.birdup.api.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
@@ -22,8 +23,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http
-                .cors(CorsConfigurer::disable)
+       return http
+                .cors(Customizer.withDefaults())
                 .csrf(CsrfConfigurer::disable)
                 .authorizeHttpRequests(auth ->
                         // sightings endpoint does not require authorization
@@ -40,8 +41,6 @@ public class SecurityConfig {
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(
                         jwtConfigurer -> jwtConfigurer.jwtAuthenticationConverter(
-                                new UserProvisioningJwtAuthenticationConverter(userRepository))));
-
-        return http.build();
+                                new UserProvisioningJwtAuthenticationConverter(userRepository)))).build();
     }
 }
