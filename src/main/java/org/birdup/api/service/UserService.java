@@ -1,6 +1,6 @@
 package org.birdup.api.service;
 
-import org.birdup.api.entity.User;
+import org.birdup.api.model.entity.User;
 import org.birdup.api.repository.UserRepository;
 import org.springframework.stereotype.Service;
 

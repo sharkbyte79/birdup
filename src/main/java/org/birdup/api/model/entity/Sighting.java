@@ -1,4 +1,4 @@
-package org.birdup.api.entity;
+package org.birdup.api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 
 import java.time.LocalDateTime;
 
-public record BirdSighting(
+public record Sighting(
         String speciesCode,
         String comName,
         String sciName,

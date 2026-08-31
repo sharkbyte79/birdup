@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import org.birdup.api.model.entity.BirdSighting;
+import org.birdup.api.model.entity.Sighting;
 import org.birdup.api.model.entity.Follow;
 import org.birdup.api.repository.FollowRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,7 +38,7 @@ public class SightingService {
    * @return the list of data on bird sightings per the specified regionCode, empty if null.
    */
   @Cacheable(value = "sightings", key = "#regionCode + #notable")
-  public List<BirdSighting> getSightingsByRegion(final String regionCode, final boolean notable) {
+  public List<Sighting> getSightingsByRegion(final String regionCode, final boolean notable) {
 
     var birdSightings =
         restClient
@@ -52,12 +52,12 @@ public class SightingService {
                         .fragment(notable ? "/notable" : null)
                         .build(regionCode))
             .retrieve()
-            .body(BirdSighting[].class);
+            .body(Sighting[].class);
 
     return birdSightings != null ? Arrays.stream(birdSightings).toList() : Collections.emptyList();
   }
 
-  public List<BirdSighting> getSightingsByCoordinates(
+  public List<Sighting> getSightingsByCoordinates(
       final double latitude, final double longitude, final boolean notable) {
 
     var sightings =
@@ -72,7 +72,7 @@ public class SightingService {
                         .fragment(notable ? "/notable" : null)
                         .build())
             .retrieve()
-            .body(BirdSighting[].class);
+            .body(Sighting[].class);
 
     return sightings != null ? Arrays.stream(sightings).toList() : Collections.emptyList();
   }
@@ -83,7 +83,7 @@ public class SightingService {
   /// @param userId unique ID referring to a user.
   /// @param notable only return sightings marked as notable.
   /// @return map of region codes to sighting lists.
-  public Map<String, List<BirdSighting>> getFollowedSightingsForUser(
+  public Map<String, List<Sighting>> getFollowedSightingsForUser(
       final String userId, final boolean notable) {
 
     return followRepository.findFollowsByUserIdOrderByRegionCodeAsc(userId).stream()
@@ -91,6 +91,6 @@ public class SightingService {
         .collect(
             Collectors.toMap(
                 regionCode -> regionCode,
-                regionCode -> this.getSightingsByRegion(regionCode, false)));
+                regionCode -> this.getSightingsByRegion(regionCode, notable)));
   }
 }
