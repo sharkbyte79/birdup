@@ -1,6 +1,6 @@
 package org.birdup.api.configuration;
 
-import org.birdup.api.entity.User;
+import org.birdup.api.model.entity.User;
 import org.birdup.api.repository.UserRepository;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -25,6 +25,7 @@ public class UserProvisioningJwtAuthenticationConverter implements Converter<Jwt
 
     @Override
     public final AbstractAuthenticationToken convert(Jwt jwt) {
+
         final var userId = jwt.getSubject();
         if (!userRepository.existsByUserId(userId)) {
             userRepository.save(new User(userId, jwt.getClaim("email")));
@@ -33,5 +34,3 @@ public class UserProvisioningJwtAuthenticationConverter implements Converter<Jwt
         return defaultJwtAuthenticationConvertor.convert(jwt);
     }
 }
-
-
