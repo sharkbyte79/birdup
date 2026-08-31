@@ -5,13 +5,15 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { apiBasePathInterceptor } from './interceptors/api-base-path-interceptor';
+import { provideKeycloakAngular } from './config/authProvider';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
+    provideKeycloakAngular(),
     provideRouter(routes),
     provideHttpClient(withInterceptors([
-      apiBasePathInterceptor
+      apiBasePathInterceptor,
     ])),
     provideTaiga(),
   ],
