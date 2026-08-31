@@ -1,4 +1,4 @@
-package org.birdup.api.entity;
+package org.birdup.api.model.entity;
 
 import jakarta.persistence.*;
 
@@ -24,5 +24,17 @@ public class Follow {
         this.userId = userId;
         this.regionCode = regionCode;
         this.createdAt = LocalDateTime.now();
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public String getRegionCode() {
+        return regionCode;
+    }
+
+    public String getUserId() {
+        return userId;
     }
 }

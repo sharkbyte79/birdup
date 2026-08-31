@@ -1,4 +1,4 @@
-package org.birdup.api.entity;
+package org.birdup.api.model.entity;
 
 import java.io.Serializable;
 
