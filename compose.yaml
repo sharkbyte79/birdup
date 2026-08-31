@@ -20,6 +20,7 @@ services:
     profiles: ["prod"]
 
   web-dev:
+    container_name: web
     build:
       context: ./birdup-web/
       dockerfile: Dockerfile.dev
