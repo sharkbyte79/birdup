@@ -4,19 +4,24 @@
 @h-padding: 1rem;
 @v-padding: 0.5rem;
 
-.sighting-species-subtitle {
-  font-style: italic;
+:host {
+  display: flex;
+  flex-direction: column;
+
+  gap: 1rem;
+  inline-size: 32rem;
+
+  background: var(--tui-background-base-alt);
+  box-shadow: 0 0 0 100rem var(--tui-background-base-alt);
 }
 
 .sighting-species-badge {
   display: flex;
-  //gap: 1.25rem;
 
   background-color: @bg-green;
   color: @text-green;
 
   padding: @v-padding @h-padding;
-  border-radius: 0.25rem;
 
   span {
     font-weight: bold;

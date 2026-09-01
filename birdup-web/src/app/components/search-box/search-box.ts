@@ -1,16 +1,15 @@
 import { Component, inject, output, model } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { form, required, submit, FormField, apply, validate } from '@angular/forms/signals';
-import {TuiButton, TuiIcon, TuiInput, TuiInputDirective, TuiTextfieldComponent} from "@taiga-ui/core";
+import {TuiAppearance, TuiButton, TuiIcon, TuiInput, TuiInputDirective, TuiTextfieldComponent} from "@taiga-ui/core";
 import { TuiSearch } from '@taiga-ui/layout';
-import SightingService from '../sighting';
-import { SearchInfo } from '../models/search-info';
+import SightingService from '../../services/sighting';
+import {SearchInfo} from '../../models/search-info';
 import {TuiTooltip} from '@taiga-ui/kit';
 
 @Component({
   selector: 'app-search-box',
   imports: [
-    TuiButton,
     TuiSearch,
     TuiInput,
     TuiInputDirective,
@@ -18,14 +17,13 @@ import {TuiTooltip} from '@taiga-ui/kit';
     FormsModule,
     FormField,
     TuiIcon,
-    TuiTooltip
+    TuiTooltip,
+    TuiAppearance
   ],
   templateUrl: './search-box.html',
   styleUrl: './search-box.less',
 })
 export class SearchBox {
-  private sightingService = inject(SightingService);
-
   readonly model = model.required<SearchInfo>();
   protected readonly searchSubmit = output<void>();
 

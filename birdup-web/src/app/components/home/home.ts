@@ -1,18 +1,19 @@
 import { Component, inject, signal } from '@angular/core';
 import { SearchBox } from '../search-box/search-box';
 import { SightingCard } from '../sighting-card/sighting-card';
-import Sighting from '../sighting.models';
-import SightingService from '../sighting';
-import { SearchInfo } from '../models/search-info';
+import Sighting from '../../services/sighting.models';
+import SightingService from '../../services/sighting';
+import {SearchInfo} from '../../models/search-info';
 import { catchError } from 'rxjs';
-import {SearchResults} from '../components/search-results/search-results';
+import {SearchResults} from '../search-results/search-results';
+import {SightingMap} from '../sighting-map/sighting-map';
 
 @Component({
   selector: 'app-home',
   imports: [
     SearchBox,
-    SightingCard,
     SearchResults,
+    SightingMap,
   ],
   templateUrl: './home.html',
   styleUrl: './home.css',
@@ -20,16 +21,18 @@ import {SearchResults} from '../components/search-results/search-results';
 export class Home {
   private sightingService = inject(SightingService);
   // TODO convert messy search form into reactive one
+  // protected readonly sightings = signal<Map<number, Sighting>>(new Map());
   protected readonly sightings = signal<Sighting[]>([]);
 
   // protected readonly searchData = signal<SearchInfo>({ regionCode: "", notable: false });
-  protected readonly searchData = signal<SearchInfo>({ regionCode: "" });
+  protected searchData = signal<SearchInfo>({regionCode: ""});
+
+  protected readonly load = signal<boolean>(false);
 
   /*
   * @param regionCode
   */
   getSightings(): void {
-    console.log("meow");
     const { regionCode } = this.searchData();
     this.sightingService.getSightingByRegion(regionCode.trim())
       .pipe(
@@ -37,8 +40,10 @@ export class Home {
           throw err;
         })
       ).subscribe((sightings) => {
-        this.sightings.set(sightings);
         console.log(this.sightings);
+      // this.sightings.set(new Map(sightings.map((sighting, index) => [index, sighting])));
+      this.sightings.set(sightings);
+
       });
   }
 }

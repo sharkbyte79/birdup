@@ -1,0 +1,58 @@
+<header tuiNavigationHeader>
+  <span tuiNavigationLogo>
+    <tui-icon icon="@tui.bird"/>
+    <label tuiNavigationLogo>
+      BirdUp
+    </label>
+  </span>
+  <span tuiNavigationSegments>
+        <button
+          tuiButton
+          appearance="secondary-grayscale"
+          type="button"
+          routerLink="/home"
+        >
+        Home
+        </button>
+        <button
+          tuiButton
+          appearance="secondary-grayscale"
+          iconStart="@tui.check"
+          type="button"
+          routerLink="/"
+        >
+        Explore Observations
+        </button>
+
+    <div class="nav-auth-buttons">
+    @if (this.isAuthenticated) {
+      <button
+        (click)="logout()"
+        tuiButton
+        appearance="secondary-grayscale"
+        type="button"
+      >
+        Log out
+      </button>
+    } @else {
+      <button
+        (click)="login()"
+        tuiButton
+        appearance="secondary-grayscale"
+        type="button"
+      >
+        Log in
+      </button>
+      <button
+        (click)="register()"
+        tuiButton
+        appearance="secondary-grayscale"
+        type="button"
+      >
+        Create Account
+      </button>
+    }
+    </div>
+
+    </span>
+</header>

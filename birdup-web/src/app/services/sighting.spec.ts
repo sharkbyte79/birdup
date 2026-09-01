@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { Sighting } from './sighting';
+import Sighting from './sighting.models';
 
 describe('Sighting', () => {
   let service: Sighting;

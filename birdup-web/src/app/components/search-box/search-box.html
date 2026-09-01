@@ -5,7 +5,9 @@
   <a
     href="https://support.ebird.org/en/support/solutions/articles/48001009443-ebird-hotspot-faqs"
   >
-    eBird's FAQ</a> for region codes
+    eBird's FAQ
+  </a>
+   for region codes
   </span>
 </ng-template>
 
@@ -14,12 +16,11 @@
     <fieldset tuiTextfieldSize="m">
 
       <tui-textfield iconStart="@tui.search">
-        <!-- <input tuiInput [(ngModel)]="searchTerm" placeholder="Search by region code (e.g. US-MA)" name="search" /> -->
         <label tuiLabel>eBird Region Code</label>
         <input tuiInput [formField]="form.regionCode" placeholder="Search by region code (e.g. US-MA)"/>
         <tui-icon [tuiTooltip]="searchTip"/>
       </tui-textfield>
-    </fieldset>
 
+    </fieldset>
   </form>
 </search>

@@ -1,18 +1,18 @@
 import { Component, input } from '@angular/core';
-import { TuiAppearance, TuiIcon, TuiTitle } from '@taiga-ui/core';
+import {TuiIcon, TuiTitle} from '@taiga-ui/core';
 import { TuiBadge } from '@taiga-ui/kit';
-import {TuiCardMedium, TuiCardRow} from "@taiga-ui/layout";
-import Sighting from '../sighting.models';
+import {TuiCardLarge, TuiCardRow, TuiHeader} from "@taiga-ui/layout";
+import Sighting from '../../services/sighting.models';
 
 @Component({
   selector: 'app-sighting-card',
   imports: [
-    TuiAppearance,
     TuiBadge,
-    TuiCardMedium,
     TuiIcon,
     TuiTitle,
-    TuiCardRow
+    TuiCardRow,
+    TuiCardLarge,
+    TuiHeader,
   ],
   templateUrl: './sighting-card.html',
   styleUrl: './sighting-card.less',

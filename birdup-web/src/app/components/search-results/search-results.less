@@ -1,10 +1,28 @@
+:host {
+  display: flex;
+  flex-direction: column;
+
+  gap: 1rem;
+
+  padding: 0.5rem;
+}
+
+.search-results-label {
+  display: flex;
+  flex-direction: row;
+
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
 
 .sighting-results-grid {
   display: grid;
-  grid-template-columns: repeat(4, auto);
+  grid-template-columns: repeat(3, auto);
 
-  align-items: center;
-  justify-content: center;
+  place-content: center;
+  box-sizing: border-box;
 
   gap: 1rem;
 }
+
+

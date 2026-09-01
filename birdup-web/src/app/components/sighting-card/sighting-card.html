@@ -1,0 +1,65 @@
+<div
+  appearance="floating"
+  tuiCardLarge
+>
+  <header tuiHeader="body-l">
+
+    <hgroup tuiTitle>
+      <h2 class="sighting-species-title">
+        {{ sighting().comName }}
+        <div>
+          <tui-icon icon="@tui.image"/>
+        </div>
+      </h2>
+      <p tuiSubtitle class="fade">
+        <i>
+          {{ sighting().sciName }}
+        </i>
+      </p>
+    </hgroup>
+
+    <aside tuiAccessories>
+      <div
+        class="sighting-species-badge"
+        iconStart="@tui.binoculars"
+        tuiBadge
+        size="xl"
+      >
+        <span>
+        {{ sighting().howMany }}
+        </span>
+      </div>
+    </aside>
+
+  </header>
+
+  <div tuiCardRow>
+
+    <div tuiTitle>
+      <div tuiSubtitle>
+        Location
+      </div>
+      <div>
+        <tui-icon icon="@tui.pin"/>
+        <span class="fade">{{ sighting().locName }} </span>
+      </div>
+    </div>
+
+    <div tuiTitle>
+      <div tuiSubtitle>How Many</div>
+      <div>
+        <tui-icon icon="@tui.binoculars"/>
+        {{ sighting().howMany }}
+      </div>
+    </div>
+
+    <div tuiTitle>
+      <div tuiSubtitle>Timestamp</div>
+      <div>
+        <tui-icon icon="@tui.clock"/>
+        {{ sighting().obsDt }}
+      </div>
+    </div>
+
+  </div>
+</div>

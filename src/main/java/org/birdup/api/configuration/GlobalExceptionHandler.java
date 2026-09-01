@@ -10,14 +10,11 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+public class GlobalExceptionHandler {
 
-    /// Handles exceptions thrown for request bodies that do not
-    /// pass validation constraints.
-    @ExceptionHandler({
-            MethodArgumentNotValidException.class
-    })
-    public ResponseEntity<HttpStatus> handleValidationError(Exception ex, WebRequest request) {
+  /// Handles exceptions thrown for request bodies that do not pass validation constraints.
+  @ExceptionHandler({MethodArgumentNotValidException.class})
+  public ResponseEntity<HttpStatus> handleValidationError() {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
