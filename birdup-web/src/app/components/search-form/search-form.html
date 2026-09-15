@@ -1,0 +1,76 @@
+<ng-template #searchTip>
+  <span class="search-tip">
+    Confused? See
+    <a href="https://support.ebird.org/en/support/solutions/articles/48001009443-ebird-hotspot-faqs">
+      eBird's FAQ
+    </a>
+    for region codes
+  </span>
+</ng-template>
+
+<search tuiSearch>
+  <!-- <form [formRoot]="form" (submit)="onSubmit($event)"> -->
+  <form [formRoot]="form">
+    <fieldset tuiTextfieldSize="m">
+
+      <tui-accordion>
+        <button iconStart="@tui.earth" [tuiAccordion]="true">
+          World Map
+        </button>
+        <tui-expand>
+          <ng-container *tuiItem>
+            <app-sighting-map [sightings]="sightings()" />
+          </ng-container>
+        </tui-expand>
+      </tui-accordion>
+
+      <div tuiGroup class="search-box-row">
+        <!-- @if (model().type == "Region") { -->
+        @if (domainModel().type == "Region") {
+        <tui-textfield iconStart="@tui.search">
+          <label tuiLabel>eBird Region Code</label>
+          <input tuiInput [formField]="form.searchTerm" placeholder="Search by region code (e.g. US-MA)" />
+          <tui-icon [tuiTooltip]="searchTip" />
+        </tui-textfield>
+        } @else {
+        <tui-textfield iconStart="@tui.search">
+          <label tuiLabel>GPS Coordinates</label>
+          <input tuiInput [formField]="form.searchTerm"
+            placeholder="Search by latitude & longitude (e.g. 42.355, -71.0658)" />
+          <tui-icon [tuiTooltip]="searchTip" />
+        </tui-textfield>
+        }
+
+        <button tuiButton tuiButtonSelect tuiChevron name="searchModePicker" /* [ngModel]="model().searchMode" */
+          [ngModel]="domainModel().type" (ngModelChange)="setSearchMode($event)">
+          <tui-data-list-wrapper *tuiDropdown [items]="searchModeOptions" />
+
+          @let mode = domainModel().type;
+          @if (mode == "Coordinate") {
+          <tui-icon icon="@tui.locate-fixed" />
+          } @else {
+          <tui-icon icon="@tui.a-large-small" />
+          }
+        </button>
+      </div>
+
+      <div class="search-options-row">
+        <tui-textfield iconStart="@tui.ruler-dimension-line">
+          <label tuiLabel>Radius</label>
+          <input tuiInputSlider postfix=" KM" name="radiusPicker" [min]="0" [max]="50" [defaultValue]="25"
+            [ngModel]="formModel().radius" (ngModelChange)="setRadius($event)" />
+          <input tuiSlider type="range" />
+        </tui-textfield>
+
+        <label>Notable</label>
+        <input tuiSwitch type="checkbox" [formField]="form.notable" />
+      </div>
+
+    </fieldset>
+
+    <button tuiButton type="submit">
+
+    </button>
+
+  </form>
+</search>

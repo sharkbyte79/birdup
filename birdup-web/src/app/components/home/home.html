@@ -1,8 +1,6 @@
-<section>
-  <app-sighting-map/>
-  <app-search-box [(model)]="searchData" (searchSubmit)="getSightings()" />
-  <!-- show the sighting data in a grid arrangement of cards if fetched -->
-  @if (sightings().length > 0) {
-    <app-search-results [results]="sightings()" [regionCode]="searchData().regionCode" " />
-  }
-</section>
+<!--  <app-sighting-map/>-->
+<app-search-box [(domainModel)]="searchData" (searchSubmit)="getSightings()" [sightings]="sightings()" />
+<!-- show the sighting data in a grid arrangement of cards if fetched -->
+@if (sightings().length > 0) {
+<app-search-results [results]="sightings()" [searchTerm]="''" />
+}

@@ -1,7 +1,7 @@
 <h2
   class="search-results-label"
   tuiTitle
->Results: {{ regionCode() }}
+>Results: {{ searchTerm() }}
   <button
     tuiButton
     size="s"
@@ -14,6 +14,6 @@
 
 <section class="sighting-results-grid">
   @for (sighting of results(); track $index) {
-  <app-sighting-card [sighting]="sighting" />
-}
+    <app-sighting-card [sighting]="sighting" [tuiShimmer]="loading()" />
+  }
 </section>
