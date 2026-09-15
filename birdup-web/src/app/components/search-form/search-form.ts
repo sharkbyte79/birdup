@@ -49,12 +49,12 @@ export class SearchForm {
   // Initialize form with domain model
   readonly domainModel = model.required<SearchOptions>();
   readonly sightings = input<Sighting[] | null>(null);
-  protected searchModeOptions: SearchMode[] = ["Region Code", "Coordinates"];
+  protected searchModeOptions = ["Region", "Coordinate"];
 
   // protected sliderIncrements: number[] = [10, 20, 30, 40, 50];
   protected readonly searchSubmit = output<void>();
 
-  readonly formModel = linkedSignal({
+  readonly formModel = linkedSignal<SearchOptions, SearchFormModel>({
     source: this.domainModel,
     computation: (domainModel) => domainModel
       ? searchOptionsToSearchFormModel(domainModel)
@@ -84,7 +84,7 @@ export class SearchForm {
     this.formModel.update(m => ({ ...m, radius: n }));
   }
 
-  setSearchMode(s: SearchMode) {
-    this.formModel.update(m => ({ ...m, searchMode: s }));
+  setSearchMode(s: "Region" | "Coordinate") {
+    this.formModel.update(m => ({ ...m, type: s }));
   }
 }
