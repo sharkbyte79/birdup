@@ -12,6 +12,7 @@ import {TuiGroup, TuiIcon, TuiTextfield} from '@taiga-ui/core';
 import {FormsModule} from '@angular/forms';
 import Sighting from '../../services/sighting.models';
 import {FeatureCollection, GeoJsonProperties, Point} from 'geojson';
+import {FieldTree} from '@angular/forms/signals';
 
 @Component({
   selector: 'app-sighting-map',
@@ -38,7 +39,7 @@ export class SightingMap {
   protected readonly mapCenter: number[] = [-74.5, 40];
 
   readonly sightings = input<Sighting[]>([]);
-  readonly coordinates = model<number[] | null>(null);
+  readonly coordinates = model.required<FieldTree<string>>();
 
   readonly selectedElement = signal<GeoJsonProperties | null>(null);
   readonly selectedLngLat = signal<LngLat | undefined>(undefined);
@@ -59,7 +60,8 @@ export class SightingMap {
   }));
 
   onDragEnd(marker: Marker) {
-    this.coordinates.set(marker.getLngLat().toArray());
+    // this is ugly but oh well
+    this.coordinates()().value.set(marker.getLngLat().toArray().toString());
   }
 
   onMouseOver(event: MapLayerMouseEvent): void {

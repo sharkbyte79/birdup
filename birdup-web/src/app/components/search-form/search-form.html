@@ -18,7 +18,7 @@
         </button>
         <tui-expand>
           <ng-container *tuiItem>
-            <app-sighting-map [sightings]="sightings()" />
+            <app-sighting-map [sightings]="sightings()" [coordinates]="form.coordinates"/>
           </ng-container>
         </tui-expand>
       </tui-accordion>
@@ -34,7 +34,7 @@
         } @else {
         <tui-textfield iconStart="@tui.search">
           <label tuiLabel>GPS Coordinates</label>
-          <input tuiInput [formField]="form.searchTerm"
+          <input tuiInput [formField]="form.coordinates"
             placeholder="Search by latitude & longitude (e.g. 42.355, -71.0658)" />
           <tui-icon [tuiTooltip]="searchTip" />
         </tui-textfield>

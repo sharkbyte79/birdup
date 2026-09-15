@@ -2,8 +2,6 @@ package org.birdup.api.controller;
 
 import java.util.List;
 import java.util.Map;
-
-import io.swagger.v3.oas.annotations.Operation;
 import org.birdup.api.model.entity.Sighting;
 import org.birdup.api.service.SightingService;
 import org.slf4j.Logger;
@@ -35,16 +33,20 @@ public class SightingController {
 
   @GetMapping
   public ResponseEntity<List<Sighting>> getSightingsByCoordinates(
-      @RequestParam(name = "lat") double latitude, @RequestParam(name = "lng") double longitude) {
+      @RequestParam(name = "lat") double latitude,
+      @RequestParam(name = "lng") double longitude,
+      @RequestParam(name = "rad") int radius) {
     return ResponseEntity.ok(
-        this.sightingService.getSightingsByCoordinates(latitude, longitude, false));
+        this.sightingService.getSightingsByCoordinates(latitude, longitude, radius, false));
   }
 
   @GetMapping("/notable")
   public ResponseEntity<List<Sighting>> getNotableSightingsByCoordinates(
-      @RequestParam(name = "lat") double latitude, @RequestParam(name = "lng") double longitude) {
+      @RequestParam(name = "lat") double latitude,
+      @RequestParam(name = "lng") double longitude,
+      @RequestParam(name = "rad") int radius) {
     return ResponseEntity.ok(
-        this.sightingService.getSightingsByCoordinates(latitude, longitude, true));
+        this.sightingService.getSightingsByCoordinates(latitude, longitude, radius, true));
   }
 
   @GetMapping("/following/{userId}")

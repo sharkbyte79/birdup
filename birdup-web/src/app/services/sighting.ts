@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import Sighting from './sighting.models';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -10,12 +10,17 @@ export default class SightingService {
   private readonly endpoint: string = "sightings";
   private http: HttpClient = inject(HttpClient);
 
-  getSightingByRegion(regionCode: string): Observable<Sighting[]> {
-    return this.http.get<Sighting[]>(`${this.endpoint}/${regionCode}`);
+  getSightingByRegion(regionCode: string, notable: boolean): Observable<Sighting[]> {
+    return this.http.get<Sighting[]>(`${this.endpoint}/${regionCode}${notable ? "/notable" : ""}`);
   }
 
-  getNotableSightingsByRegion(regionCode: string): Observable<Sighting[]> {
-    return this.http.get<Sighting[]>(`${this.endpoint}/${regionCode}/notable`);
+  getSightingByCoordinates(coordinates: number[], notable: boolean, radius: number) {
+    const params = new HttpParams()
+        .set("lat", coordinates[1])
+        .set("lng", coordinates[0])
+        .set("rad", radius);
+
+    return this.http.get<Sighting[]>(`${this.endpoint}${notable ? "/notable" : ""}`, {params})
   }
 }
 

@@ -58,7 +58,7 @@ public class SightingService {
   }
 
   public List<Sighting> getSightingsByCoordinates(
-      final double latitude, final double longitude, final boolean notable) {
+      final double latitude, final double longitude, final int radius, final boolean notable) {
 
     var sightings =
         restClient
@@ -69,6 +69,7 @@ public class SightingService {
                         .path("/data/obs/geo/recent")
                         .queryParam("lat", latitude)
                         .queryParam("lng", longitude)
+                        .queryParam("dist", radius)
                         .fragment(notable ? "/notable" : null)
                         .build())
             .retrieve()

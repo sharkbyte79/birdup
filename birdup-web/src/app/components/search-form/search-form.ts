@@ -63,7 +63,7 @@ export class SearchForm {
 
   protected readonly form = form<SearchFormModel>(this.formModel,
     (schemaPath) => {
-      required(schemaPath.searchTerm, { message: 'Please enter a region code' });
+      // required(schemaPath.searchTerm, { message: 'Please enter a region code' });
       // required(schema.radius, { message: "Please enter a radius" })
 
       disabled(schemaPath.radius, {
