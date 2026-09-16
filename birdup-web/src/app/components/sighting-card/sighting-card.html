@@ -7,9 +7,6 @@
     <hgroup tuiTitle>
       <h2 class="sighting-species-title">
         {{ sighting().comName }}
-        <div>
-          <tui-icon icon="@tui.image"/>
-        </div>
       </h2>
       <p tuiSubtitle class="fade">
         <i>
@@ -17,6 +14,8 @@
         </i>
       </p>
     </hgroup>
+
+    @let howMany = sighting().howMany || "??";
 
     <aside tuiAccessories>
       <div
@@ -26,7 +25,7 @@
         size="xl"
       >
         <span>
-        {{ sighting().howMany }}
+        {{ howMany }}
         </span>
       </div>
     </aside>
@@ -49,7 +48,7 @@
       <div tuiSubtitle>How Many</div>
       <div>
         <tui-icon icon="@tui.binoculars"/>
-        {{ sighting().howMany }}
+        {{ howMany }}
       </div>
     </div>
 
